@@ -108,11 +108,12 @@ class TestQuotation(FastAPITransactionCase):
         with self._create_test_client(router=quotation_cart_router) as test_client:
             response: Response = test_client.post(f"/{cart.uuid}/request_quotation")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.json()["uuid"], cart.uuid)
-        self.assertEqual(response.json()["typology"], "sale")
+        response_json = response.json()
+        self.assertEqual(response_json["uuid"], cart.uuid)
+        self.assertEqual(response_json["typology"], "sale")
 
     def test_update_quotation(self):
-        data = {"customer_ref": "PO_123123"}
+        data = {"client_order_ref": "PO_123123"}
         quotation = self.env["sale.order"].create(
             {
                 "partner_id": self.default_fastapi_authenticated_partner.id,
@@ -128,4 +129,6 @@ class TestQuotation(FastAPITransactionCase):
             status.HTTP_200_OK,
             msg=f"error message: {response.text}",
         )
-        self.assertEqual(response.json()["id"], quotation.id)
+        response_json = response.json()
+        self.assertEqual(response_json["id"], quotation.id)
+        self.assertEqual(response_json["client_order_ref"], "PO_123123")

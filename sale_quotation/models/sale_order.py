@@ -23,7 +23,6 @@ class SaleOrder(models.Model):
         store=True,
         readonly=False,
     )
-    available_for_quotation = fields.Boolean(compute="_compute_available_for_quotation")
     shop_only_quotation = fields.Boolean(compute="_compute_shop_only_quotation")
 
     def _quotation_state_need_updated(self):
@@ -56,10 +55,6 @@ class SaleOrder(models.Model):
             )
         self.write({"quotation_state": "customer_request", "typology": "sale"})
         return True
-
-    def _compute_available_for_quotation(self):
-        for record in self:
-            record.available_for_quotation = True
 
     def _compute_shop_only_quotation(self):
         for record in self:
