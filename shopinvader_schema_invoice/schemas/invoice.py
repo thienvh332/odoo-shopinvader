@@ -9,13 +9,13 @@ from extendable_pydantic import StrictExtendableBaseModel
 from .amount import InvoiceAmount
 
 
-class InvoiceState(Enum):
+class InvoiceState(str, Enum):
     draft = "draft"
     posted = "posted"
     cancel = "cancel"
 
 
-class InvoicePaymentState(Enum):
+class InvoicePaymentState(str, Enum):
     not_paid = "not_paid"
     in_payment = "in_payment"
     paid = "paid"
@@ -24,31 +24,31 @@ class InvoicePaymentState(Enum):
     invoicing_legacy = "invoicing_legacy"
 
 
-class Invoice(StrictExtendableBaseModel, extra="ignore"):
+class Invoice(StrictExtendableBaseModel):
     id: int
     name: str
     date_invoice: date
     date_due: date | None = None
     state: InvoiceState
     payment_state: InvoicePaymentState
-    ref: str | str
-    payment_reference: str | str
-    amount: InvoiceAmount | None
+    ref: str
+    payment_reference: str
+    amount: InvoiceAmount
 
     @classmethod
-    def from_record(cls, odoo_rec):
+    def from_account_move(cls, odoo_rec):
         return cls.model_construct(
             id=odoo_rec.id,
             name=odoo_rec.name,
             date_invoice=odoo_rec.invoice_date,
             date_due=odoo_rec.invoice_date_due or None,
-            state=odoo_rec.state,
-            payment_state=odoo_rec.payment_state,
+            state=InvoiceState(odoo_rec.state),
+            payment_state=InvoicePaymentState(odoo_rec.payment_state),
             ref=odoo_rec.ref or "",
             payment_reference=odoo_rec.payment_reference or "",
-            amount=InvoiceAmount.from_record(odoo_rec),
+            amount=InvoiceAmount.from_account_move(odoo_rec),
         )
 
     @classmethod
-    def from_records(cls, odoo_recs):
-        return [cls.from_record(rec) for rec in odoo_recs]
+    def from_account_moves(cls, odoo_recs):
+        return [cls.from_account_move(rec) for rec in odoo_recs]

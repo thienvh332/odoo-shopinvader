@@ -6,14 +6,14 @@ from extendable_pydantic import StrictExtendableBaseModel
 from odoo.tools.float_utils import float_round
 
 
-class InvoiceAmount(StrictExtendableBaseModel, extra="ignore"):
-    amount_tax: float | None
-    amount_untaxed: float | None
-    amount_total: float | None
-    amount_due: float | None
+class InvoiceAmount(StrictExtendableBaseModel):
+    amount_tax: float
+    amount_untaxed: float
+    amount_total: float
+    amount_due: float
 
     @classmethod
-    def from_record(cls, odoo_rec):
+    def from_account_move(cls, odoo_rec):
         precision = odoo_rec.currency_id.decimal_places
         return cls.model_construct(
             amount_tax=float_round(odoo_rec.amount_tax, precision),

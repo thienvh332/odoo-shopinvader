@@ -51,7 +51,7 @@ async def search(
     )
     return PagedCollection[Invoice](
         count=count,
-        items=Invoice.from_records(invoices),
+        items=Invoice.from_account_moves(invoices),
     )
 
 
