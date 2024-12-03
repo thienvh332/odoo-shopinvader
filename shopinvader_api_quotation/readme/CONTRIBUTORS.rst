@@ -3,3 +3,4 @@
 * Iván Todorovich <ivan.todorovich@gmail.com>
 * Simone Orsi <simone.orsi@camptocamp.com>
 * Matthieu Saison <matthieu.saison@akretion.com>
+* Florian Mounier <florian.mounier@akretion.com>

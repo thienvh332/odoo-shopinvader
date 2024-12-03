@@ -9,8 +9,7 @@ from odoo.tests.common import tagged
 
 from odoo.addons.extendable_fastapi.tests.common import FastAPITransactionCase
 
-from ..routers.cart import cart_router
-from ..routers.quotation import quotation_router
+from ..routers import quotation_cart_router, quotation_router
 
 
 @tagged("post_install", "-at_install")
@@ -73,7 +72,7 @@ class TestQuotation(FastAPITransactionCase):
                 "quotation_state": "waiting_acceptation",
             }
         )
-        with self._create_test_client(router=quotation_router) as test_client:
+        with self._create_test_client() as test_client:
             response: Response = test_client.get("/quotations")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.json()["count"], 1)
@@ -85,7 +84,7 @@ class TestQuotation(FastAPITransactionCase):
                 "quotation_state": "waiting_acceptation",
             }
         )
-        with self._create_test_client(router=quotation_router) as test_client:
+        with self._create_test_client() as test_client:
             response: Response = test_client.get(f"/quotations/{sale.id}")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.json()["name"], sale.name)
@@ -97,7 +96,7 @@ class TestQuotation(FastAPITransactionCase):
                 "quotation_state": "waiting_acceptation",
             }
         )
-        with self._create_test_client(router=quotation_router) as test_client:
+        with self._create_test_client() as test_client:
             response: Response = test_client.post(f"/quotations/{quotation.id}/confirm")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.json()["id"], quotation.id)
@@ -106,7 +105,7 @@ class TestQuotation(FastAPITransactionCase):
         cart = self.env["sale.order"]._create_empty_cart(
             self.default_fastapi_authenticated_partner.id
         )
-        with self._create_test_client(router=cart_router) as test_client:
+        with self._create_test_client(router=quotation_cart_router) as test_client:
             response: Response = test_client.post(f"/{cart.uuid}/request_quotation")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.json()["uuid"], cart.uuid)
@@ -120,7 +119,7 @@ class TestQuotation(FastAPITransactionCase):
                 "quotation_state": "waiting_acceptation",
             }
         )
-        with self._create_test_client(router=quotation_router) as test_client:
+        with self._create_test_client() as test_client:
             response: Response = test_client.post(
                 f"/quotations/{quotation.id}", content=json.dumps(data)
             )
