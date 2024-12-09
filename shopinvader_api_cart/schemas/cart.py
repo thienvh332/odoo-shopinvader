@@ -31,7 +31,7 @@ class CartUpdateInput(StrictExtendableBaseModel, extra="ignore"):
     invoicing: InvoicingUpdateInfo | None = None
     note: str | None = None
 
-    def convert_to_sale_write(self, cart):
+    def _to_sale_order_vals(self):
         vals = {}
         data = self.model_dump(exclude_unset=True)
         if "client_order_ref" in data:
