@@ -41,6 +41,6 @@ class ShopinvaderApiLoyaltyRouterHelper(models.AbstractModel):
             rule_id = self.env["loyalty.rule"].search([("code", "=", code)], limit=1)
             if rule_id:
                 program_id = rule_id.program_id
-        if program_id:
+        if program_id.active:
             return program_id.reward_ids
         return self.env["loyalty.reward"]
