@@ -25,22 +25,18 @@ class SaleOrder(models.Model):
     )
     shop_only_quotation = fields.Boolean(compute="_compute_shop_only_quotation")
 
-    def _quotation_state_need_updated(self):
-        self.ensure_one()
-        return self.quotation_state not in [
-            "customer_request",
-            "waiting_acceptation",
-            "accepted",
-        ]
-
     @api.depends("state")
     def _compute_quotation_state(self):
         for record in self:
             if record.state == "cancel":
                 record.quotation_state = "cancel"
-            elif record.state == "draft" and record._quotation_state_need_updated():
+            elif record.state == "draft" and record.quotation_state not in (
+                "customer_request",
+                "waiting_acceptation",
+                "accepted",
+            ):
                 record.quotation_state = "draft"
-            elif record.state == "sent" and record._quotation_state_need_updated():
+            elif record.state == "sent" and record.quotation_state != "accepted":
                 record.quotation_state = "waiting_acceptation"
             elif record.state == "sale":
                 record.quotation_state = "accepted"
@@ -63,4 +59,11 @@ class SaleOrder(models.Model):
             )
 
     def action_confirm_quotation(self):
+        if any(rec.quotation_state != "waiting_acceptation" for rec in self):
+            raise UserError(
+                _(
+                    "Only quotation with the state 'waiting_acceptation' can be "
+                    "Confirmed."
+                )
+            )
         self.quotation_state = "accepted"
