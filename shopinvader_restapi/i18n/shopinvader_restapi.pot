@@ -54,6 +54,11 @@ msgid "# Meetings"
 msgstr ""
 
 #. module: shopinvader_restapi
+#: model:ir.model.fields,field_description:shopinvader_restapi.field_shopinvader_partner__supplier_invoice_count
+msgid "# Vendor Bills"
+msgstr ""
+
+#. module: shopinvader_restapi
 #: model:ir.model.fields,field_description:shopinvader_restapi.field_shopinvader_partner__wishlists_count
 msgid "# Wishlists"
 msgstr ""
@@ -1577,6 +1582,11 @@ msgstr ""
 #. module: shopinvader_restapi
 #: model:ir.model.fields,field_description:shopinvader_restapi.field_shopinvader_backend__server_env_defaults
 msgid "Server Env Defaults"
+msgstr ""
+
+#. module: shopinvader_restapi
+#: model:ir.model.fields,help:shopinvader_restapi.field_shopinvader_partner__use_partner_credit_limit
+msgid "Set a value greater than 0.0 to activate a credit limit check"
 msgstr ""
 
 #. module: shopinvader_restapi
