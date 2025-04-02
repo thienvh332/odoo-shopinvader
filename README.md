@@ -25,7 +25,7 @@ addon | version | maintainers | summary
 [sale_cart_step](sale_cart_step/) | 16.0.1.0.0 |  | Track checkout steps on sale cart.
 [shopinvader_address](shopinvader_address/) | 16.0.1.1.1 |  | Shopinvader Address: Delivery,Invoicing
 [shopinvader_anonymous_partner](shopinvader_anonymous_partner/) | 16.0.1.1.0 |  | Manage anonymous partners with a cookie.
-[shopinvader_api_address](shopinvader_api_address/) | 16.0.1.3.1 |  | Adds a service to manage shopinvader invoicing and delivery address
+[shopinvader_api_address](shopinvader_api_address/) | 16.0.1.3.2 |  | Adds a service to manage shopinvader invoicing and delivery address
 [shopinvader_api_cart](shopinvader_api_cart/) | 16.0.1.4.2 |  | Cart FastAPI designed to work with the shopinvader-js-cart library see (https://github.com/shopinvader/shopinvader-js-cart)
 [shopinvader_api_cart_step](shopinvader_api_cart_step/) | 16.0.1.0.1 |  | Track checkout steps on sale cart.
 [shopinvader_api_customer](shopinvader_api_customer/) | 16.0.1.1.0 |  | Adds service to manage shopinvader customer
@@ -56,7 +56,7 @@ addon | version | maintainers | summary
 [shopinvader_restapi_sale_packaging](shopinvader_restapi_sale_packaging/) | 16.0.1.1.0 |  | Shopinvader Restapi Sale Packaging
 [shopinvader_sale_cart](shopinvader_sale_cart/) | 16.0.1.1.0 |  | ShopInvader logic for sale carts.
 [shopinvader_sale_state](shopinvader_sale_state/) | 16.0.1.0.1 |  | Basic module to implement state for sale order
-[shopinvader_schema_address](shopinvader_schema_address/) | 16.0.1.3.1 |  | Adds shchema address: address invoicing_address delivery_address
+[shopinvader_schema_address](shopinvader_schema_address/) | 16.0.1.3.2 |  | Adds shchema address: address invoicing_address delivery_address
 [shopinvader_schema_sale](shopinvader_schema_sale/) | 16.0.1.1.3 |  | Add schema sale
 [shopinvader_schema_sale_state](shopinvader_schema_sale_state/) | 16.0.1.0.1 |  | Shopinvader Schema Sale State
 [shopinvader_search_engine](shopinvader_search_engine/) | 16.0.1.0.6 |  | Shopinvader Catalog Search Engine Connector
