@@ -279,9 +279,15 @@ class ShopinvaderApiCartRouterHelper(models.AbstractModel):
             self._apply_transactions(cart, transactions)
         return cart
 
+    def _prepare_update_cart_vals(self, data: CartUpdateInput, cart: SaleOrder) -> dict:
+        return data._to_sale_order_vals()
+
     def _update(self, partner, data, uuid):
         cart = self.env["sale.order"]._find_open_cart(partner.id, uuid)
         if not cart:
             cart = self.env["sale.order"]._create_empty_cart(partner.id)
-        cart.write(data.convert_to_sale_write(cart))
+
+        vals = self._prepare_update_cart_vals(data, cart)
+        cart.write(vals)
+
         return cart

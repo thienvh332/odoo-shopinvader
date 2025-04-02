@@ -6,7 +6,6 @@ from odoo.exceptions import MissingError, UserError
 
 
 class ResPartner(models.Model):
-
     _inherit = "res.partner"
 
     def _ensure_shopinvader_invoicing_address_not_used(self) -> None:
@@ -83,11 +82,9 @@ class ResPartner(models.Model):
         raise UserError(_("Creation of invoicing addresses is not supported"))
 
     def _update_shopinvader_invoicing_address(
-        self, vals: dict, address_id: int
+        self, vals: dict, address: "ResPartner"
     ) -> "ResPartner":
         self.ensure_one()
-        address = self._get_shopinvader_invoicing_address(address_id)
-
         # if invoicing address is already used, it is not possible to modify it
         # an error will be raised
         address._ensure_shopinvader_invoicing_address_not_used()
@@ -125,20 +122,18 @@ class ResPartner(models.Model):
         return self.env["res.partner"].create(vals)
 
     def _update_shopinvader_delivery_address(
-        self, vals: dict, address_id: int
+        self, vals: dict, address: "ResPartner"
     ) -> "ResPartner":
-
         if any(key in vals for key in ("parent_id", "type")):
             raise UserError(
                 _(
                     "parent_id and type cannot be modified on"
                     " shopinvader delivery address, id: %(address_id)d",
-                    address_id=address_id,
+                    address_id=address.id,
                 )
             )
 
         self.ensure_one()
-        address = self._get_shopinvader_delivery_address(address_id)
 
         # if delivery address is already used, it is not possible to modify it
         address._ensure_shopinvader_delivery_address_not_used()
@@ -147,17 +142,11 @@ class ResPartner(models.Model):
         address.write(vals)
         return address
 
-    def _delete_shopinvader_delivery_address(self, address_id: int) -> None:
+    def _delete_shopinvader_delivery_address(self, address: "ResPartner") -> None:
         """
         Delete of shopinvader delivery addresses will result to an archive
         """
-        address = self._get_shopinvader_delivery_address(address_id)
-        if address:
-            address._ensure_shopinvader_delivery_address_not_used()
+        address._ensure_shopinvader_delivery_address_not_used()
 
-            # archive address
-            address.active = False
-        else:
-            raise MissingError(
-                _("No address found, id: %(address_id)d", address_id=address_id)
-            )
+        # archive address
+        address.active = False

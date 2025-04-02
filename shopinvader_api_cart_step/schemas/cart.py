@@ -8,15 +8,5 @@ from odoo.addons.shopinvader_api_cart.schemas import (
 
 
 class CartUpdateInput(BaseCartUpdateInput, extends=True):
-
     current_step: str | None = None
     next_step: str | None = None
-
-    def convert_to_sale_write(self, cart):
-        vals = super().convert_to_sale_write(cart)
-        if self.current_step or self.next_step:
-            step_data = cart._cart_step_update_vals(
-                current_step=self.current_step, next_step=self.next_step
-            )
-            vals.update(step_data)
-        return vals
