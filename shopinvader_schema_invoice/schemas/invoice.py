@@ -3,8 +3,12 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 from datetime import date
 from enum import Enum
+from typing import Annotated
 
 from extendable_pydantic import StrictExtendableBaseModel
+from pydantic import Field
+
+from odoo import api
 
 from .amount import InvoiceAmount
 
@@ -52,3 +56,19 @@ class Invoice(StrictExtendableBaseModel):
     @classmethod
     def from_account_moves(cls, odoo_recs):
         return [cls.from_account_move(rec) for rec in odoo_recs]
+
+
+class InvoiceSearch(StrictExtendableBaseModel, extra="ignore"):
+    name: Annotated[
+        str | None,
+        Field(
+            description="When used, the search look for any invoice where name "
+            "contains the given value case insensitively."
+        ),
+    ] = None
+
+    def to_odoo_domain(self, env: api.Environment):
+        if self.name:
+            return [("name", "ilike", self.name)]
+        else:
+            return []

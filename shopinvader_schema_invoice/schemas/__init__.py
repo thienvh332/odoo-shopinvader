@@ -1,2 +1,2 @@
 from .amount import InvoiceAmount
-from .invoice import Invoice
+from .invoice import Invoice, InvoiceSearch
