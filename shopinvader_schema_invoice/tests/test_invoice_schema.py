@@ -3,12 +3,12 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 from ..schemas import Invoice, InvoiceAmount
-from .common import SchemaInvoiceCase, create_invoice
+from .common import SchemaInvoiceCase
 
 
 class TestInvoiceSchema(SchemaInvoiceCase):
     def test_invoice_amount(self):
-        invoice_rec = create_invoice(self.env, self.partner, self.product)
+        invoice_rec = self._create_invoice(self.partner, self.product)
         inv_amount = InvoiceAmount.from_account_move(invoice_rec)
         expected = {
             "amount_tax": invoice_rec.amount_tax,
@@ -19,7 +19,7 @@ class TestInvoiceSchema(SchemaInvoiceCase):
         self.assertEqual(inv_amount.model_dump(), expected)
 
     def test_invoice(self):
-        invoice_rec = create_invoice(self.env, self.partner, self.product)
+        invoice_rec = self._create_invoice(self.partner, self.product)
         invoice = Invoice.from_account_move(invoice_rec)
         expected = {
             "id": invoice_rec.id,
