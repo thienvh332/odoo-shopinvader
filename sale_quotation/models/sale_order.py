@@ -22,6 +22,7 @@ class SaleOrder(models.Model):
         compute="_compute_quotation_state",
         store=True,
         readonly=False,
+        copy=False,
     )
     shop_only_quotation = fields.Boolean(compute="_compute_shop_only_quotation")
 
