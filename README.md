@@ -26,7 +26,7 @@ addon | version | maintainers | summary
 [shopinvader_address](shopinvader_address/) | 16.0.1.1.1 |  | Shopinvader Address: Delivery,Invoicing
 [shopinvader_anonymous_partner](shopinvader_anonymous_partner/) | 16.0.1.1.0 |  | Manage anonymous partners with a cookie.
 [shopinvader_api_address](shopinvader_api_address/) | 16.0.1.3.2 |  | Adds a service to manage shopinvader invoicing and delivery address
-[shopinvader_api_cart](shopinvader_api_cart/) | 16.0.1.4.2 |  | Cart FastAPI designed to work with the shopinvader-js-cart library see (https://github.com/shopinvader/shopinvader-js-cart)
+[shopinvader_api_cart](shopinvader_api_cart/) | 16.0.1.5.0 |  | Cart FastAPI designed to work with the shopinvader-js-cart library see (https://github.com/shopinvader/shopinvader-js-cart)
 [shopinvader_api_cart_step](shopinvader_api_cart_step/) | 16.0.1.0.1 |  | Track checkout steps on sale cart.
 [shopinvader_api_customer](shopinvader_api_customer/) | 16.0.1.1.0 |  | Adds service to manage shopinvader customer
 [shopinvader_api_lead](shopinvader_api_lead/) | 16.0.1.0.1 |  | Lead FastAPI adding a service for creating CRM leads.
@@ -54,7 +54,7 @@ addon | version | maintainers | summary
 [shopinvader_restapi_auth_jwt](shopinvader_restapi_auth_jwt/) | 16.0.1.2.0 |  | Find shopinvader backend and partner from JWT token
 [shopinvader_restapi_invoice](shopinvader_restapi_invoice/) | 16.0.1.0.0 |  | Shopinvader Restapi Invoice module
 [shopinvader_restapi_sale_packaging](shopinvader_restapi_sale_packaging/) | 16.0.1.1.0 |  | Shopinvader Restapi Sale Packaging
-[shopinvader_sale_cart](shopinvader_sale_cart/) | 16.0.1.1.0 |  | ShopInvader logic for sale carts.
+[shopinvader_sale_cart](shopinvader_sale_cart/) | 16.0.1.2.0 |  | ShopInvader logic for sale carts.
 [shopinvader_sale_state](shopinvader_sale_state/) | 16.0.1.0.1 |  | Basic module to implement state for sale order
 [shopinvader_schema_address](shopinvader_schema_address/) | 16.0.1.3.2 |  | Adds shchema address: address invoicing_address delivery_address
 [shopinvader_schema_sale](shopinvader_schema_sale/) | 16.0.1.1.3 |  | Add schema sale
