@@ -632,6 +632,11 @@ msgid "Delivery Method"
 msgstr ""
 
 #. module: shopinvader_restapi
+#: model:ir.model.fields,field_description:shopinvader_restapi.field_shopinvader_partner__shipping_note
+msgid "Delivery Note"
+msgstr ""
+
+#. module: shopinvader_restapi
 #: model:ir.model.fields,field_description:shopinvader_restapi.field_shopinvader_backend__display_name
 #: model:ir.model.fields,field_description:shopinvader_restapi.field_shopinvader_cart_step__display_name
 #: model:ir.model.fields,field_description:shopinvader_restapi.field_shopinvader_notification__display_name
@@ -860,6 +865,11 @@ msgstr ""
 #. module: shopinvader_restapi
 #: model:ir.model.fields,field_description:shopinvader_restapi.field_shopinvader_partner__industry_id
 msgid "Industry"
+msgstr ""
+
+#. module: shopinvader_restapi
+#: model:ir.model.fields,help:shopinvader_restapi.field_shopinvader_partner__shipping_note
+msgid "Instruction for the delivery person in case of absence"
 msgstr ""
 
 #. module: shopinvader_restapi
