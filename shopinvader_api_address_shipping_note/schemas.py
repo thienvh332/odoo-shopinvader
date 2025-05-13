@@ -47,8 +47,7 @@ class ShippingAddressNoteUpdate(DeliveryAddressUpdate, extends=True):
 
     def to_res_partner_vals(self) -> dict:
         vals = super().to_res_partner_vals()
-        fname = "shipping_note"
-        values = self.model_dump(exclude_unset=True, include=[fname])
-        if fname in values:
-            vals[fname] = values[fname]
+        values = self.model_dump(exclude_unset=True, include=["shipping_note"])
+        if "shipping_note" in values:
+            vals["shipping_note"] = values["shipping_note"]
         return vals
