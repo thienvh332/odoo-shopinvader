@@ -5,7 +5,7 @@
     "name": "Shopinvader Search Engine Product Price",
     "summary": """
         Add the export of product prices for Shopinvader""",
-    "version": "16.0.1.0.0",
+    "version": "16.0.1.1.0",
     "category": "e-commerce",
     "license": "AGPL-3",
     "author": "ACSONE SA/NV",
