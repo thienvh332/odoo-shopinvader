@@ -24,8 +24,10 @@ addon | version | maintainers | summary
 [sale_cart](sale_cart/) | 16.0.1.0.0 |  | Uee Sale Orders as cart.
 [sale_cart_step](sale_cart_step/) | 16.0.1.0.0 |  | Track checkout steps on sale cart.
 [shopinvader_address](shopinvader_address/) | 16.0.1.1.1 |  | Shopinvader Address: Delivery,Invoicing
+[shopinvader_address_shipping_note](shopinvader_address_shipping_note/) | 16.0.1.0.0 |  | Adds a field shipping note on res.partner
 [shopinvader_anonymous_partner](shopinvader_anonymous_partner/) | 16.0.1.1.0 |  | Manage anonymous partners with a cookie.
 [shopinvader_api_address](shopinvader_api_address/) | 16.0.1.3.2 |  | Adds a service to manage shopinvader invoicing and delivery address
+[shopinvader_api_address_shipping_note](shopinvader_api_address_shipping_note/) | 16.0.1.0.0 |  | Adds a shipping note on schemas of services to manage Shipping Addresses
 [shopinvader_api_cart](shopinvader_api_cart/) | 16.0.1.5.0 |  | Cart FastAPI designed to work with the shopinvader-js-cart library see (https://github.com/shopinvader/shopinvader-js-cart)
 [shopinvader_api_cart_step](shopinvader_api_cart_step/) | 16.0.1.0.1 |  | Track checkout steps on sale cart.
 [shopinvader_api_customer](shopinvader_api_customer/) | 16.0.1.1.0 |  | Adds service to manage shopinvader customer
