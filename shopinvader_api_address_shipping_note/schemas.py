@@ -19,7 +19,6 @@ class ShippingAddressNote(DeliveryAddress, extends=True):
     def from_res_partner(cls, odoo_rec):
         res = super().from_res_partner(odoo_rec)
         res.shipping_note = odoo_rec.shipping_note or None
-
         return res
 
 
@@ -32,9 +31,7 @@ class ShippingAddressNoteCreate(DeliveryAddressCreate, extends=True):
 
     def to_res_partner_vals(self) -> dict:
         vals = super().to_res_partner_vals()
-
         vals["shipping_note"] = self.shipping_note
-
         return vals
 
 
