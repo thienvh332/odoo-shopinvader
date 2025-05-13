@@ -2,7 +2,7 @@
 # Copyright 2024 Camptocamp (http://www.camptocamp.com).
 # @author Simone Orsi <simahawk@gmail.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
-from collections import OrderedDict
+from collections import defaultdict, namedtuple
 from typing import Annotated
 from uuid import UUID
 
@@ -95,6 +95,30 @@ class ShopinvaderApiCartRouterHelper(models.AbstractModel):
     _name = "shopinvader_api_cart.cart_router.helper"
     _description = "ShopInvader API Cart Router Helper"
 
+    def _get_transaction_key(self, transaction: CartTransaction):
+        """
+        Return a namedtuple of values that identify a transaction and match it
+        against a cart line.
+
+        To override this method create a new namedtuple combining the super fields
+        and the new ones and return it with the values that identify the transaction.
+
+        Example:
+        ```python
+
+        def _get_transaction_key(self, transaction: CartTransaction):
+            key = super()._get_transaction_key(transaction)
+            return namedtuple(
+                key.__class__.__name__, key._fields + ('my_field',)
+            )(
+                *key,
+                my_field=transaction.my_field,
+            )
+        ```
+
+        """
+        return namedtuple("TransactionKey", ["product_id"])(transaction.product_id)
+
     @api.model
     def _check_transactions(self, transactions: list[CartTransaction]):
         """Check if the transactions info are valid.
@@ -109,21 +133,15 @@ class ShopinvaderApiCartRouterHelper(models.AbstractModel):
                 )
 
     @api.model
-    def _group_transactions_by_product_id(self, transactions: list[CartTransaction]):
+    def _group_transactions(self, transactions: list[CartTransaction]):
         """
-        Gather together transactions that are linked to the same product.
+        Gather together transactions that are linked to the same transaction key.
         """
-        # take an ordered dict to ensure to create lines into the same
-        # order as the transactions list
-        transactions_by_product_id = OrderedDict()
-        for trans in transactions:
-            product_id = trans.product_id
-            transactions = transactions_by_product_id.get(product_id)
-            if not transactions:
-                transactions = []
-                transactions_by_product_id[product_id] = transactions
-            transactions.append(trans)
-        return transactions_by_product_id
+        grouped_transactions = defaultdict(list)
+        for transaction in transactions:
+            key = self._get_transaction_key(transaction)
+            grouped_transactions[key].append(transaction)
+        return grouped_transactions
 
     @api.model
     def _apply_transactions_on_existing_cart_line(
@@ -231,23 +249,26 @@ class ShopinvaderApiCartRouterHelper(models.AbstractModel):
             return
         cart.ensure_one()
         self._check_transactions(transactions=transactions)
-        transactions_by_product_id = self._group_transactions_by_product_id(
-            transactions=transactions
-        )
-        update_cmds = []
         # prefetch all products
-        self.env["product.product"].browse(transactions_by_product_id.keys())
+        self.env["product.product"].browse({tx.product_id for tx in transactions})
+        grouped_transactions = self._group_transactions(transactions=transactions)
+        update_cmds = []
         # here we avoid that each on change on a line trigger all the
         # recompute methods on the SO. These methods will be triggered
         # by the orm into the 'write' process
-        for product_id, trxs in transactions_by_product_id.items():
-            line = cart._get_cart_line(product_id)
+        for key, trxs in grouped_transactions.items():
+            line = cart._get_cart_line(
+                **self._apply_transactions_creating_new_cart_line_prepare_vals(
+                    cart, trxs, {"product_id": key.product_id}
+                )
+            )
             if line:
                 cmd = self._apply_transactions_on_existing_cart_line(line, trxs)
             else:
                 cmd = self._apply_transactions_creating_new_cart_line(cart, trxs)
             if cmd:
                 update_cmds.append(cmd)
+
         all_transaction_uuids = transaction_uuids = [
             str(t.uuid) for t in transactions if t.uuid
         ]

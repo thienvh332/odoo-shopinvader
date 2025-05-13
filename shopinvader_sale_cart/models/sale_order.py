@@ -6,7 +6,6 @@ from odoo import api, fields, models
 
 
 class SaleOrder(models.Model):
-
     _inherit = "sale.order"
 
     uuid = fields.Char(string="EShop Unique identifier", readonly=True)
@@ -75,31 +74,26 @@ class SaleOrder(models.Model):
         vals = self._prepare_cart(partner_id)
         return self.create(vals)
 
-    def _get_cart_line(self, product_id):
+    def _get_cart_line(self, **kwargs):
         """
-        Return the sale order line of the cart associated to the given product.
+        Return the sale order line of the cart associated to the given fields.
         """
         self.ensure_one()
-        return self.order_line.filtered(
-            lambda l, product_id=product_id: l.product_id.id == product_id
-        )[:1]
+        return self.order_line.filtered(lambda sol: sol._match_cart_line(**kwargs))[:1]
 
     def _update_cart_lines_from_cart(self, cart):
         self.ensure_one()
         update_cmds = []
         for cart_line in cart.order_line:
-            line = self._get_cart_line(cart_line.product_id.id)
+            line = self._get_cart_line(**cart_line.read(load=False)[0])
             if line:
                 new_qty = line.product_uom_qty + cart_line.product_uom_qty
                 vals = {"product_uom_qty": new_qty}
                 vals.update(line._play_onchanges_cart_line(vals))
                 cmd = (1, line.id, vals)
             else:
-                vals = {
-                    "order_id": self.id,
-                    "product_id": cart_line.product_id.id,
-                    "product_uom_qty": cart_line.product_uom_qty,
-                }
+                vals = cart_line._prepare_cart_line_transfer_values()
+                vals["order_id"] = self.id
                 vals.update(self.env["sale.order.line"]._play_onchanges_cart_line(vals))
                 cmd = (0, None, vals)
             update_cmds.append(cmd)
