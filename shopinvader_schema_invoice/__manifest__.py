@@ -4,7 +4,7 @@
 {
     "name": "Shopinvader schema invoice",
     "summary": "Add schema for invoices",
-    "version": "16.0.1.0.0",
+    "version": "16.0.1.0.1",
     "development_status": "Alpha",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
     "author": " Camptocamp",
