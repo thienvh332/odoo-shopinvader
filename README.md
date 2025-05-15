@@ -23,6 +23,7 @@ addon | version | maintainers | summary
 --- | --- | --- | ---
 [sale_cart](sale_cart/) | 16.0.1.0.0 |  | Uee Sale Orders as cart.
 [sale_cart_step](sale_cart_step/) | 16.0.1.0.0 |  | Track checkout steps on sale cart.
+[sale_quotation](sale_quotation/) | 16.0.0.2.0 |  | Sale Quotation
 [shopinvader_address](shopinvader_address/) | 16.0.1.1.1 |  | Shopinvader Address: Delivery,Invoicing
 [shopinvader_address_shipping_note](shopinvader_address_shipping_note/) | 16.0.1.0.0 |  | Adds a field shipping note on res.partner
 [shopinvader_anonymous_partner](shopinvader_anonymous_partner/) | 16.0.1.1.0 |  | Manage anonymous partners with a cookie.
@@ -34,6 +35,7 @@ addon | version | maintainers | summary
 [shopinvader_api_customer](shopinvader_api_customer/) | 16.0.1.1.0 |  | Adds service to manage shopinvader customer
 [shopinvader_api_invoice](shopinvader_api_invoice/) | 16.0.1.0.1 |  | Provides invoice web api via Fastapi
 [shopinvader_api_lead](shopinvader_api_lead/) | 16.0.1.0.1 |  | Lead FastAPI adding a service for creating CRM leads.
+[shopinvader_api_quotation](shopinvader_api_quotation/) | 16.0.1.1.0 |  | Shopinvader Quotation
 [shopinvader_api_sale](shopinvader_api_sale/) | 16.0.1.1.4 |  | Sale FastApi for exposing sale order
 [shopinvader_api_sale_loyalty](shopinvader_api_sale_loyalty/) | 16.0.1.1.2 |  | FastAPI services to add coupons and loyalties to carts.
 [shopinvader_api_security_invoice](shopinvader_api_security_invoice/) | 16.0.1.0.1 |  | Add security rule to expose invoices
