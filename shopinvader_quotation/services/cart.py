@@ -27,9 +27,3 @@ class CartService(Component):
 
     def _validator_request_quotation(self):
         return {}
-
-    def _convert_one_sale(self, sale):
-        res = super()._convert_one_sale(sale)
-        # Used in frontend
-        res.update({"available_for_quotation": True})
-        return res
